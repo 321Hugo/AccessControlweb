@@ -1,0 +1,139 @@
+﻿@model AccessControlweb.Models.dbcompany
+
+@{
+    ViewBag.Title = "查詢資料";
+}
+<h4>查詢資料</h4>
+<form action="@Url.Action("CherkCompany", "Home")" method="post">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="container" style="width: auto; overflow-x: auto;">
+            <table class="table" border="0" style="margin-left: auto;margin-right: auto;">
+                <tr>
+                    <td style="text-align: right;">
+                        @Html.LabelFor(model => model.CardFrm, "卡號:", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.CardFrm, new { htmlAttributes = new { @class = "form-control" }, @style = "width:80%;" })
+                            @*@Html.ValidationMessageFor(model => model.CardFrm, "", new { @class = "text-danger" })*@
+                        </div>
+                    </td>
+                    <td style="text-align: left;">
+                        @Html.LabelFor(model => model.Day, "日期:", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Day, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                            @Html.ValidationMessageFor(model => model.Day, "", new { @class = "text-danger" })
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;"></td>
+                    <td style="text-align: left;"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;">
+                        @Html.LabelFor(model => model.Name, "姓名:", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @*@Html.DisplayFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })*@
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </td>
+                    <td style="text-align: left;">
+                        @Html.LabelFor(model => model.Department, "部門:", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.Department, new SelectList(new List<string> { "資訊部", "人事部", "財務部", "業務部" }), "-- 選擇部門 --", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
+                            @*@Html.EditorFor(model => model.Department, new { htmlAttributes = new { @class = "form-control" } })*@
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;">
+
+                        @Html.LabelFor(model => model.UserId, "工號:", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                            @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
+                        </div>
+                    </td>
+                    <td style="text-align: left;">
+                        @*查詢按鈕*@
+                        <button type="submit" name="UserId" id="UserId" class = "btn btn-info" value="">查詢資料</button>
+                        @*跳轉到edit這邊*@
+                        @Html.ActionLink("卡片資料修改", "Edit", "Home"@*, new { model => model.UserId }*@, new { @class = "btn btn-secondary" })
+                    </td>
+                </tr>
+            </table>
+            <table class="table" border="0" style="margin-left: auto;margin-right: auto;">
+                <tr style="text-align: center;">
+                    <td>可選取權限</td>
+                    <td></td>
+                    <td>已選取權限</td>
+                </tr>
+                @*<tr>
+                    <td>
+                        <div>
+                            <select id="selectLeft" multiple style="overflow: auto;text-align: center; width: 700px; height: 400px; font-size:32px; ">
+                                <option>一廠</option>
+                                <option>二廠</option>
+                                <option>三廠</option>
+                                <option>裁切</option>
+                                <option>彩印</option>
+                            </select>
+                        </div>
+                    </td>
+                    <td style="text-align: right;margin:auto">
+                        <br /><br /><br />
+                        <input id="moveAllRight" type="button" value=">>" onclick="addAllOption('selectLeft','selectRight')" />
+                        <br /><br />
+                        <input id="moveRight" type="button" value=">" onclick="addOptions('selectLeft','selectRight')" />
+                        <br /><br />
+                        <input id="moveLeft" type="button" value="<" onclick="addOptions('selectRight','selectLeft')" />
+                        <br /><br />
+                        <input id="moveAllLeft" type="button" value="<<" onclick="addAllOption('selectRight','selectLeft')" />
+                        <br /><br />
+                    </td>
+                    <td style="text-align: center;">
+                        <div>
+                            <select name="Ambit" id="selectRight" multiple style="overflow: auto; text-align: left;width: 700px; height: 400px; font-size:32px;"></select>
+                        </div>
+                    </td>
+                </tr>*@
+                <tr>
+                    <td>
+                        <div>
+                            @Html.DropDownListFor(model => model.Ambit, new SelectList(new List<string> { "一廠", "二廠", "三廠", "彩印" }), new { @id = "selectLeft", @class = "form-control", style = "overflow: auto; text-align: center; width: 700px; height: 400px; font-size: 32px;", multiple = "multiple" })
+                        </div>
+                    </td>
+                    <td style="text-align: right; margin: auto">
+                        <br /><br /><br />
+                        <input id="moveAllRight" type="button" value=">>" onclick="addAllOption('selectLeft', 'selectRight')" />
+                        <br /><br />
+                        <input id="moveRight" type="button" value=">" onclick="addOptions('selectLeft', 'selectRight')" />
+                        <br /><br />
+                        <input id="moveLeft" type="button" value="<" onclick="addOptions('selectRight', 'selectLeft')" />
+                        <br /><br />
+                        <input id="moveAllLeft" type="button" value="<<" onclick="addAllOption('selectRight', 'selectLeft')" />
+                        <br /><br />
+                    </td>
+                    <td width="700" style="text-align: center;">
+                        <div>
+                            @Html.DropDownListFor(model => model.Ambit, new SelectList(new List<string> { }), new { @id = "selectRight", @class = "form-control", style = "overflow: auto; text-align: left; width: 700px; height: 400px; font-size: 32px;", multiple = "multiple" })
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>@Html.ActionLink("回首頁", "Index", "Home")</td>
+                    <td colspan="2" style="text-align:right;margin-right: 10px;">
+                        <input type="submit" value="儲存" class="btn btn-success" onclick="return confirm('資料確認無誤???')" style="margin-right: 3em;" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    }
+</form>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

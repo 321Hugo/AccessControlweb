@@ -1,0 +1,64 @@
+﻿@model IEnumerable<AccessControlweb.Models.CardBox>
+
+@{
+    ViewBag.Title = "卡片管理";
+}
+
+<h2>卡片管理</h2>
+
+<p>
+    @Html.ActionLink("登入新卡片", "Create")
+</p>
+<p>總卡片數: @ViewBag.TotalCards  |  以使用卡片數: @ViewBag.UsedCards | 庫存卡片數: @ViewBag.UnusedCards</p>
+
+<table class="table">
+    <tr>
+        <th>
+            編號
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CardId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Day)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RecDay)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <th>
+                @item.Id
+
+            </th>
+            <td>
+                @if (item.CardId != null)
+                {
+                    @Html.DisplayFor(modelItem => item.CardId)
+                }
+            </td>
+            <td>
+                @if (item.Day != null)
+                {
+                    @Html.DisplayFor(modelItem => item.Day)
+                }
+            </td>
+            <td>
+                @if (item.RecDay != null)
+                {
+                    @Html.DisplayFor(modelItem => item.RecDay)
+                }
+            </td>
+            <td>
+                @*@Html.ActionLink("編輯", "CardBoxEdit", "CardBox", new { id = item.Id }) |*@
+                @Html.ActionLink("編輯", "CardBoxEdit", "CardBox", new { cardId = item.CardId }) |
+                @Html.ActionLink("刪除", "CardBoxDelete", "CardBox", new { cardId = item.CardId }, new { onclick = "return confirm('確定刪除????')" })
+            </td>
+        </tr>
+    }
+
+</table>

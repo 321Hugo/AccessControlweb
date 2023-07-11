@@ -1,0 +1,162 @@
+﻿@model AccessControlweb.Models.dbcompany
+
+@*@model IEnumerable<AccessControlweb.Models.dbcompany>*@
+
+@{
+    ViewBag.Title = "卡片維護";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <form class="container" style="width: 100%; overflow-x: auto;">
+        <table class="table" id="table1" border="0" style="margin-left: auto;margin-right: auto;">
+            <tr>
+                <td style="text-align: left;">
+                    @*class="form-control"帶入可以統一表格顏色*@
+                    @Html.LabelFor(model => model.CardFrm, "卡號:", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.CardFrm, new { htmlAttributes = new { @class = "form-control" }, @style = "width:80%;" })
+                        @Html.ValidationMessageFor(model => model.CardFrm, "", new { @class = "text-danger" })
+                    </div>
+                </td>
+                <td style="text-align: left;">
+                    @Html.LabelFor(model => model.Day, "日期:", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Day, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                        @Html.ValidationMessageFor(model => model.Day, "", new { @class = "text-danger" })
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: left;"></td>
+                <td style="text-align: left;"></td>
+            </tr>
+            <tr>
+                <td style="text-align: left;">
+                    @Html.LabelFor(model => model.Name, "姓名:", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </td>
+                <td style="text-align: left;">
+                    @Html.LabelFor(model => model.Department, "部門:", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.Department, new SelectList(new List<string> { "資訊部", "人事部", "財務部", "業務部" }), "-- 選擇部門 --", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: left;">
+
+                    @Html.LabelFor(model => model.UserId, "工號:", htmlAttributes: new { @class = "control-label col-md-2"})
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger"})
+                    </div>
+                </td>
+                <td style="text-align: left;">
+                    @*設定一個鍵，可以在index做查詢更改*@
+                    @Html.ActionLink("查詢資料", "CherkCompany", "Home", new { @class = "btn btn-info" })  @*會跳到CherkCompay，可以進行查詢*@
+                    @*@Html.ActionLink("查詢資料", "Edit", "Home",new { UserId= m.userId }, new { @class = "btn btn-info" })*@ 
+        @*無法直接在工號輸入後，跳轉到查詢與修改*@
+                    @*<a href="~/Controllers/HomeController/CherkCompany">查詢資料 失敗</a>
+        <button name="UserId" id="UserId" style="background-color:gold" onclick="ToCherkCompany" value="">查詢資料 失敗</button>*@
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: left;"></td>
+                <td style="text-align: left;"></td>
+            </tr>
+        </table>
+        <table class="table" id="table2" border="0" style="margin-left: auto;margin-right: auto;">
+            <tr>
+                <td><input type="checkbox" id="box1" />選擇人流門</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr style="text-align: center;">
+                <td>可選取權限</td>
+                <td></td>
+                <td>已選取權限</td>
+            </tr>
+            
+            @*<tr>
+                <td>
+                    <div>
+                        <select id="selectLeft" multiple style="overflow: auto;text-align: center; width: 700px; height: 400px; font-size:32px;">
+                            <option>食品廠</option>
+                            <option>一廠</option>
+                            <option>二廠</option>
+                            <option>三廠</option>
+                            <option>裁切</option>
+                            <option>彩印</option>
+                        </select>
+                    </div>
+                </td>
+                <td style="text-align: right;margin:auto">
+                    <br /><br /><br />
+                    <input id="moveAllRight" type="button" value=">>" onclick="addAllOption('selectLeft','selectRight')" />
+                    <br /><br />
+                    <input id="moveRight" type="button" value=">" onclick="addOptions('selectLeft','selectRight')" />
+                    <br /><br />
+                    <input id="moveLeft" type="button" value="<" onclick="addOptions('selectRight','selectLeft')" />
+                    <br /><br />
+                    <input id="moveAllLeft" type="button" value="<<" onclick="addAllOption('selectRight','selectLeft')" />
+                    <br /><br />
+                </td>
+                <td width="700" style="text-align: center;"> 修改為強別型方便讀取資料測試中
+                    <div>
+                        <select name="Ambit" id="selectRight" multiple style="overflow: auto; text-align:left;width: 700px; height: 400px;font-size:32px; "></select>
+                    </div>
+                    <div>
+                        @Html.EditorFor(model => model.Ambit, new { htmlAttributes = new { @id = "selectRight", @class = "form-control", @style = "overflow: auto; text-align: left; width: 700px; height: 400px; font-size: 32px;" } })
+                    </div>
+                </td>
+            </tr>*@
+         
+            <tr style="text-align: center">
+                <td style="text-align: center">
+                    <div>
+                        @Html.DropDownListFor(model => model.Ambit, new SelectList(new List<string> { "一廠", "二廠", "三廠", "彩印", "裁切" }), new { @id = "selectLeft", @class = "form-control", style = "overflow: auto; text-align: center; width: 700px; height: 500px; font-size: 32px;", multiple = "multiple" })
+                    </div>
+                </td>
+                <td style="text-align: left">
+                    <br /><br /><br />
+                    <input id="moveAllRight" type="button" value=">>" onclick="addAllOption('selectLeft', 'selectRight')" class="btn btn-warning"/>
+                    <br /><br />
+                    <input id="moveRight" type="button" value=">" onclick="addOptions('selectLeft', 'selectRight')"  class="btn btn-warning"/>
+                    <br /><br />
+                    <input id="moveLeft" type="button" value="<" onclick="addOptions('selectRight', 'selectLeft')"  class="btn btn-warning"/>
+                    <br /><br />
+                    <input id="moveAllLeft" type="button" value="<<" onclick="addAllOption('selectRight', 'selectLeft')" class="btn btn-warning"/>
+                    <br /><br />
+                </td>
+                <td  style="text-align: center;">
+                    <div>
+                        @Html.DropDownListFor(model => model.Ambit, new SelectList(new List<string> {}), new { @id = "selectRight", @class = "form-control", style = "overflow: auto; text-align: left; width:700px; height: 500px; font-size: 32px;", multiple = "multiple" })
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.ActionLink("回首頁", "Index")</td>
+                <td colspan="2" style="text-align:right;">
+                    <input type="submit" value="註冊" class="btn btn-success" style="margin-right: 3em;" />
+                    <input type="reset" value="重製" class="btn btn-success" />
+                </td>
+            </tr>
+        </table>
+    </form>
+    <script> 
+        function ToCherkCompany() {
+            var userId = document.getElementById('UserId').value;
+            var url = @Html.ActionLink("查詢資料", "CherkCompany", "Home");
+            window.location.href = url;
+        }
+    </script>
+   
+    <p>@Html.Raw(ViewBag.Msg)</p>
+}
+    

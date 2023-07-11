@@ -1,0 +1,115 @@
+﻿@model  AccessControlweb.Models.dbcompany
+@*@model  AccessControlweb.Models.CardBox*@
+@using ClosedXML.Excel;
+@{
+    ViewBag.Title = "已發放卡片";
+}
+<h3>員工/卡號查詢</h3>
+<form action="@Url.Action("員工與卡號查詢", "CheckGoto")" method="post">
+    <input type="submit" value="查詢" class="btn btn-secondary" style="float:right" />
+    <table class="table table-bordered">
+        <tr style="background-color:lavender">
+            <td>
+                <input type="radio" name="radio1" value="工號" onclick="linkemp(); ToClear1()" style="margin-right:20px;margin-left:20px" />
+                <label for="employee01">工號</label>
+            </td>
+            <td>
+                <input type="radio" name="radio1" value="卡號" onclick="linkcard(); ToClear2()" style="margin-right:20px;margin-left:20px" />
+                <label for="card01">卡號</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label style="margin-right:15px;margin-left:10px">工號: </label>
+                @*@Html.TextBox("UserIs", null, new {placeholder="呼"})*@
+                @*<input type="text" id="UserId" />*@
+                @*可以使用，為什麼input不能用*@
+                @Html.EditorFor(model => model.UserId, new { htmlAttributes = new { @id = "demo2", @class = "form-control" } })
+            </td>
+            <td>
+                <label style="margin-right:15px;margin-left:10px">卡號:</label>
+                @*<input type="text" id="CardFrm" />*@
+                @Html.EditorFor(model => model.CardFrm, new { htmlAttributes = new { @id = "demo3", @class = "form-control" } })
+            </td>
+        </tr>
+    </table>
+    <table class="table table-bordered">
+        <tr style="background-color:lavender">
+            <td class="col-xs-1"></td>
+            <td class="col-xs-2">
+                卡號
+                @*@Html.DisplayNameFor(model => model.CardFrm)*@
+                @*名稱不存在現在內容中*@
+            </td>
+            <td class="col-xs-2">
+                員工編碼
+            </td>
+            <td class="col-xs-3">
+                發放日期
+            </td>
+            <td class="col-xs-3">
+                收回日期
+            </td>
+        </tr>
+        <tr style="overflow: auto;height:150px">
+            <td class="col-xs-1"></td>
+            <td class="col-xs-2">
+                @Html.DisplayTextFor(m => m.CardFrm)
+            </td>
+            <td class="col-xs-2">
+                @Html.DisplayTextFor(m => m.UserId)
+            </td>
+            <td class="col-xs-3">
+                @Html.DisplayTextFor(m => m.Day)
+            </td>
+            <td class="col-xs-3">
+                @Html.DisplayTextFor(m => m.RecDay)
+            </td>
+        </tr>
+    </table>
+    <table class="table table-bordered">
+        <tr style="background-color:lavender">
+            <td class="col-xs-1"></td>
+            <td class="col-xs-2">
+                序號
+            </td>
+            <td class="col-xs-2">
+                權限
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+
+        <tr style="overflow:auto;height:150px">
+            <td class="col-xs-1"></td>
+            <td class="col-xs-2">
+                還沒設資料庫
+            </td>
+            <td class="col-xs-2">
+                @Html.DisplayTextFor(m => m.Ambit)
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+</form>
+<p>
+    @Html.ActionLink("回首頁", "Index", "Home")
+</p>
+
+<script>
+    //在員工/卡號查詢
+    function linkemp() {
+        document.getElementById("UserId").focus();
+    }
+    function linkcard() {
+        document.getElementById("CardFrm").focus();
+    }
+    //清除資料(失敗)
+    function ToClear1() {
+        document.getElementById("demo2").innerHTML = "";
+    }
+    function ToClear2() {
+        document.getElementById("demo3").innerHTML = "";
+    }
+</script>

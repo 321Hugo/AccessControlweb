@@ -1,0 +1,65 @@
+﻿@model IEnumerable<AccessControlweb.Models.dbcompany>
+@{
+    ViewBag.Title = "已發放卡片";
+}
+<div class="container">
+    <h2>已發放卡片</h2>
+    <p align="right">
+
+        @Html.ActionLink("匯出EXCEL", "匯出EXCEL", "CheckGoto", new { @class = "btn btn-info" })
+        <button type="submit" style="background-color:aquamarine;">匯出EXCEL</button>
+    </p>
+    <table class="table table-hover">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Department)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CardFrm)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Day)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ambit)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelitem => item.Department)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CardFrm)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem => item.UserId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem => item.Day)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem => item.Ambit)
+                </td>
+                @*<td>
+                        @Html.ActionLink("Edit", "Edit", new { id=item.UserId }) |
+                        @Html.ActionLink("Details", "Details", new { id=item.UserId }) |
+                        @Html.ActionLink("Delete", "Delete", new { id=item.UserId })
+                    </td>*@
+            </tr>
+        }
+    </table>
+    <p>@Html.ActionLink("回首頁", "Index", "Home")</p>
+</div>

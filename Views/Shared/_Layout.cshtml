@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content=" width=device-width"/>
+    <title>@ViewBag.Title - 門禁管制</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top;">
+        <div>
+            <div class="navbar-header"> @*導航欄中的標頭，可以存放文字；按鈕、超連結*@
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("門禁管制", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <div class="container">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("卡片維護", "Index", "Home")</li>
+                        <li>@Html.ActionLink("卡片回收", "CardRecycle", "CardBox")</li>
+                        <li>@Html.ActionLink("卡片資料修改", "Edit", "Home")</li>
+                        <li  class="dropdown">
+                        <!-- 下拉選單 -->
+                        <li>
+                            @*@Html.ActionLink("查詢", "Check", "Home")*@
+                            <a class="nav-link dropdown-toggle btn-lg " href="#" id="dopdown1" data-toggle="dropdown"  aria-labelledby="dopdown1"  role="button" aria-haspopup="true" aria-expanded="false">
+                                查詢
+                            </a>
+                            @*<button class=" btn btn-secondary dropdown-toggle" id="dopdown2" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+        @Html.ActionLink("查詢", "Check", "Home")
+        </button>*@
+                            <div class="dropdown-menu" aria-labelledby="dopdown1">
+                                <a class="dropdown-item" href="#" onclick="CheckGoto('勞工代號')">勞工代號</a><br>
+                                <a class="dropdown-item" href="#" onclick="CheckGoto('員工與卡號查詢')" >員工/卡號查詢</a><br>
+                                <a class="dropdown-item" href="#" onclick="CheckGoto('已發放卡片')">已發放卡片</a>
+                            </div>
+                        </li>
+                    </ul>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - 資訊部-門禁管制</p>
+        </footer>
+    </div>
+
+
+    <script>
+        //左右選單<table2>
+        function addOptions(formId, toId) {
+            var fromEl = document.getElementById(formId),
+                toEl = document.getElementById(toId);
+            if (fromEl.selectedIndex >= 0) {
+                var index = toEl.options.length;
+
+                for (var i = 0; i < fromEl.options.length; i++) {
+                    if (fromEl.options[i].selected) {
+                        toEl.options[index] = fromEl.options[i];
+                        i--;
+                        index++;
+                    }
+                }
+            }
+        }
+        function addAllOption(formId, toId) {
+            var fromEl = document.getElementById(formId),
+                toEl = document.getElementById(toId);
+
+            var index = toEl.options.length;
+            for (var i = 0; i < fromEl.options.length; i++) {
+                if (fromEl.options.length >= 0) {
+                    toEl.options[index] = fromEl.options[i];
+                    i--;
+                    index++;
+                }
+            }
+        }
+        //在勞工代號裡配合BootStrap的傳送方式
+        function CheckGoto(option) {
+            switch (option) {
+                case '勞工代號':
+                    window.location.href = '@Url.Action("勞工代號", "CheckGoto")';
+                    break;
+                case '員工與卡號查詢':
+                    window.location.href = '@Url.Action("員工與卡號查詢", "CheckGoto")';
+                    break;
+                case '已發放卡片':
+                    window.location.href = '@Url.Action("已發放卡片", "CheckGoto")';
+                    break;
+                default:
+                    break;
+                }
+            }
+       
+    </script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+</html>

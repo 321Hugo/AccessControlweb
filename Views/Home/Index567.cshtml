@@ -1,0 +1,134 @@
+﻿@model AccessControlweb.Models.Company
+@{
+    ViewBag.Title = "卡片維護";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <table class="table" border="0">
+        <tr>
+            <td style="text-align: right;">
+                @*class="form-control"帶入可以統一表格顏色*@
+                @Html.LabelFor(model => model.CardFrm, "卡號:", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CardFrm, new { htmlAttributes = new { @class = "form-control" }, @style = "width:80%;" })
+                    @Html.ValidationMessageFor(model => model.CardFrm, "", new { @class = "text-danger" })
+                </div>
+            </td>
+            <td style="text-align: left;">
+                @Html.LabelFor(model => model.Day, "日期:", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Day, new { htmlAttributes = new { @class = "form-control", type = "date", required = "required" } })
+                    @Html.ValidationMessageFor(model => model.Day, "", new { @class = "text-danger" })
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right;"></td>
+            <td style="text-align: left;"></td>
+        </tr>
+        <tr>
+            <td style="text-align: right;">
+                @Html.LabelFor(model => model.Department, "部門:", htmlAttributes: new { @class = "control-label col-md-2" })
+                @*<div class="col-md-10">
+                        <select class="form-control" id="">
+                            <option>資訊部</option>
+                            <option>人事部</option>
+                            <option>財務部</option>
+                            <option>業務部</option>
+                        </select>   HTML下拉式選單，改為helper
+                    </div>*@
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.Department, new SelectList(new List<string> { "資訊部", "人事部", "財務部", "業務部" }), "-- 選擇部門 --", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
+                </div>
+            </td>
+            <td style="text-align: left;"></td>
+        </tr>
+        <tr>
+            <td style="text-align: right;">
+                @Html.LabelFor(model => model.UserId, "工號:", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
+                </div>
+            </td>
+            <td style="text-align: left;"></td>
+        </tr>
+        <tr>
+            <td style="text-align: right;"></td>
+            <td style="text-align: left;"></td>
+        </tr>
+    </table>
+    <table class="table" border="0">
+        <tr>
+            <td><input type="checkbox" id="box1" />選擇人流門</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>可選取權限</td>
+            <td></td>
+            <td>已選取權限</td>
+        </tr>
+        <tr>
+            <td>
+                <textarea name="mytext1" rows="15" cols="10" required>
+            </textarea>
+            </td>
+            <td style="text-align:center;vertical-align:middle">
+
+                <button type="submit" name="addbtn" value="@ViewBag.AddPower"> => </button>
+                <br /><br /><br />
+                <button type="submit" name="removebtn" value="@ViewBag.RemovePower"> <= </button>
+            </td>
+            <td>
+                <textarea name="mytext2" rows="15" cols="10" required>
+            </textarea>
+            </td>
+            <td style="vertical-align:bottom;">
+                <input type="submit" value="註冊" class="btn btn-success" />
+            </td>
+        </tr>
+    </table>
+    <table >
+        <tbody>
+            <tr>
+                <td width="700">
+                    <div>
+                        <select id="selectLeft" multiple style="overflow: auto; width: 700px; height: 400px; ">
+                            <option>資訊部</option>
+                            <option>人事部</option>
+                            <option>財務部</option>
+                            <option>業務部</option>
+                        </select>
+                        @*@Html.DropDownListFor(model => model.Department, new SelectList(new List<string> { "資訊部", "人事部", "財務部", "業務部" }), "-- 選擇部門 --", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })*@
+                    </div>
+                </td>
+                <td align="center">
+                    <input id="moveAllRight" type="button" value=">>" onclick="addAllOption('selectLeft','selectRight')" />
+                    <br /><br /><br />
+                    <input id="moveRight" type="button" value=">" onclick="addOptions('selectLeft','selectRight')" />
+                    <br /><br /><br />
+                    <input id="moveLeft" type="button" value="<" onclick="addOptions('selectRight','selectLeft')" />
+                    <br /><br /><br />
+                    <input id="moveAllLeft" type="button" value="<<" onclick="addAllOption('selectRight','selectLeft')" />
+                </td>
+                <td width="700" align="center">
+                    <div>
+                        <select id="selectRight" multiple style="overflow: auto; width: 700px; height: 400px; "></select>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <p>@Html.Raw(ViewBag.Msg)</p>
+    <div>
+        @Html.ActionLink("返回主頁", "Index")
+    </div>
+}

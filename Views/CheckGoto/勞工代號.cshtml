@@ -1,0 +1,67 @@
+﻿@model AccessControlweb.Models.dbcompany
+
+@{
+    ViewBag.Title = "勞工代號";
+}
+
+<h2>勞工代號</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+<form action="@Url.Action("勞工代號", "CheckGoto")" method="post">
+    <table class="table">
+        <tr>
+            <td style="text-align:left">
+                @Html.LabelFor(m => m.UserId, "工號:", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                    @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
+                </div>
+            </td>
+            <td style="text-align:left">
+                @*第一個無法使用?*@
+                @*@Html.ActionLink(" 查詢", " 勞工代號", new{htmlAttributes=new { @class = "btn btn-success" } })*@
+                <input type="submit" value="查詢" class="btn btn-success" />
+            </td>
+        </tr>
+
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+
+    </table>
+    <table class="table table-bordered">
+        <tr style="background-color:lavender">
+            <th>工號</th>
+            <th>部門</th>
+            <th>卡號</th>
+            <th>姓名</th>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayTextFor(m => m.UserId)
+                @*@Html.EditorFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })*@
+            </td>
+            <td>
+                @Html.DisplayTextFor(m => m.Department)
+            </td>
+            <td>
+                @Html.DisplayTextFor(m => m.CardFrm)
+            </td>
+            <td>
+                @Html.DisplayTextFor(m => m.Name)
+            </td>
+        </tr>
+    </table>
+</form>
+    <p>
+        @*@Html.ActionLink(" 查詢", " 勞工代號", new { id = Model.UserId }) |*@
+        @Html.ActionLink("回首頁", "Index", "Home")
+    </p>
+    }
